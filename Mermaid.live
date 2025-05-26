@@ -1,0 +1,26 @@
+sequenceDiagram
+    participant User
+    participant SpotifyApp
+    participant SpotifyServer
+    participant MusicDatabase
+
+    User->>SpotifyApp: Open app
+    SpotifyApp->>SpotifyServer: Request homepage data
+    SpotifyServer->>MusicDatabase: Fetch recommended music
+    MusicDatabase-->>SpotifyServer: Return music list
+    SpotifyServer-->>SpotifyApp: Return homepage data
+    SpotifyApp-->>User: Display homepage
+
+    User->>SpotifyApp: Search for song
+    SpotifyApp->>SpotifyServer: Send search query
+    SpotifyServer->>MusicDatabase: Query song info
+    MusicDatabase-->>SpotifyServer: Return search results
+    SpotifyServer-->>SpotifyApp: Return results
+    SpotifyApp-->>User: Display search results
+
+    User->>SpotifyApp: Play selected song
+    SpotifyApp->>SpotifyServer: Request song stream
+    SpotifyServer->>MusicDatabase: Get audio file
+    MusicDatabase-->>SpotifyServer: Return audio stream
+    SpotifyServer-->>SpotifyApp: Stream audio
+    SpotifyApp-->>User: Play music
