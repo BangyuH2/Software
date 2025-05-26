@@ -1,0 +1,62 @@
+# User 
+class User:
+    def open_app(self):
+        print("앱을 열고 홈 페이지를 요청합니다.")
+        spotify_app.request_homepage_data()
+        
+    def search_song(self, query):
+        print(f"'{query}'를 검색합니다.")
+        spotify_app.search_song(query)
+    
+    def play_song(self, song_id):
+        print(f"'{song_id}' 곡을 재생합니다.")
+        spotify_app.play_song(song_id)
+
+# SpotifyApp
+class SpotifyApp:
+    def __init__(self):
+        self.spotify_server = SpotifyServer()
+    
+    def request_homepage_data(self):
+        print("홈페이지 데이터를 요청합니다.")
+        self.spotify_server.fetch_homepage_data()
+    
+    def search_song(self, query):
+        print(f"'{query}'를 검색하는 요청을 서버에 보냅니다.")
+        self.spotify_server.handle_search_request(query)
+    
+    def play_song(self, song_id):
+        print(f"'{song_id}' 곡 재생을 요청합니다.")
+        self.spotify_server.stream_song(song_id)
+
+
+# Server 
+class SpotifyServer:
+    def __init__(self):
+        self.music_database = MusicDatabase()
+    
+    def fetch_homepage_data(self):
+        print("홈페이지 데이터를 요청합니다.")
+        recommended_songs = self.music_database.get_recommended_songs()
+        print(f"추천된 곡들: {recommended_songs}")
+    
+    def handle_search_request(self, query):
+        print(f"검색 쿼리를 처리합니다: {query}")
+        search_results = self.music_database.search_song(query)
+        print(f"검색 결과: {search_results}")
+    
+    def stream_song(self, song_id):
+        print(f"'{song_id}' 곡의 스트리밍을 요청합니다.")
+        audio_stream = self.music_database.get_audio_stream(song_id)
+        print(f"스트리밍 중: {audio_stream}")
+
+# MusicDatabase 
+class MusicDatabase:
+    def get_recommended_songs(self):
+        return ["Song A", "Song B", "Song C"]  # 예시 추천 곡 리스트
+    
+    def search_song(self, query):
+        return [f"{query} - Song 1", f"{query} - Song 2", f"{query} - Song 3"]  # 검색 결과 예시
+    
+    def get_audio_stream(self, song_id):
+        return f"Audio stream for {song_id}"  # 예시 스트리밍 반환
